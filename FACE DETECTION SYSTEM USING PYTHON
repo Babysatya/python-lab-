@@ -1,0 +1,153 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyN7jWhku2uqt70iP+xyuOPZ",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Babysatya/python-lab-/blob/main/FACE%20DETECTION%20SYSTEM%20USING%20PYTHON\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "FACE DETECTION:\n",
+        "Steps to implement human face recognition with Python & OpenCV:\n",
+        "1. Imports:\n"
+      ],
+      "metadata": {
+        "id": "4EqA3HlqnS46"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import cv2\n",
+        "import os\n"
+      ],
+      "metadata": {
+        "id": "rnEj-5_knZQm"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "2. Initialize the classifier:"
+      ],
+      "metadata": {
+        "id": "UqlisKF_nehy"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "cascPath=os.path.dirname(cv2.__file__)+\"/data/haarcascade_frontalface_default.xml\"\n",
+        "faceCascade = cv2.CascadeClassifier(cascPath)"
+      ],
+      "metadata": {
+        "id": "XF7ealDcnkTH"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Apply faceCascade on webcam frames:"
+      ],
+      "metadata": {
+        "id": "Wiybg48Cnrfj"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "video_capture = cv2.VideoCapture(0)\n",
+        "while True:\n",
+        "# Capture frame-by-frame\n",
+        "ret, frames = video_capture.read()\n",
+        "gray = cv2.cvtColor(frames, cv2.COLOR_BGR2GRAY)\n",
+        "faces = faceCascade.detectMultiScale(\n",
+        "gray,\n",
+        "scaleFactor=1.1,\n",
+        "minNeighbors=5,\n",
+        "minSize=(30, 30),\n",
+        "flags=cv2.CASCADE_SCALE_IMAGE\n",
+        ")\n",
+        "# Draw a rectangle around the faces\n",
+        "for (x, y, w, h) in faces:\n",
+        "cv2.rectangle(frames, (x, y), (x+w, y+h), (0, 255, 0), 2)\n",
+        "# Display the resulting frame\n",
+        "cv2.imshow('Video', frames)\n",
+        "if cv2.waitKey(1) & 0xFF == ord('q'):\n",
+        "break\n"
+      ],
+      "metadata": {
+        "id": "TFsUS5Mynvjo"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "4. Release the capture frames:"
+      ],
+      "metadata": {
+        "id": "NPfA1vxfn0Rw"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "video_capture.release()\n",
+        "cv2.destroyAllWindows()"
+      ],
+      "metadata": {
+        "id": "eJ3Vg5LTn4JA"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "5. Now, run the project file using:"
+      ],
+      "metadata": {
+        "id": "lMchXt7wn7jA"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "python3 face_detection.py"
+      ],
+      "metadata": {
+        "id": "lnTxnaS9n_3J"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
